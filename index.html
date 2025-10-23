@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Roberto</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <header>
+    <!-- 🧭 Barre de navigation -->
+    <section id="navbar">
+      <div class="image">
+        <img src="ChatGPT Image 23 sept. 2025, 17_06_41.png" alt="logo">
+      </div>
+
+      <div class="burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-links">
+        <a href="#">Accueil</a>
+        <a href="#about">À propos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </section>
+
+    <!-- 🔹 Section profil -->
+    <div class="hero-content">
+      <div class="profile-container reveal">
+        <img src="2N1A9543.JPG.png" alt="Photo de Roberto">
+      </div>
+      <h1 class="reveal">Roberto RAZAKANDRANDRIA</h1>
+      <p class="reveal">Étudiant en réseaux, cybersécurité et administration système.</p>
+    </div>
+  </header>
+
+  <!-- 🔹 À propos -->
+  <section id="about">
+    <div class="about-container">
+      <div class="skills-side">
+        <h2>Compétences</h2>
+        <div class="skills">
+          <div class="skill-line">> Réseaux & Sécurité</div>
+          <div class="skill-line">> Administration Système</div>
+          <div class="skill-line">> Linux / Windows Server</div>
+          <div class="skill-line">> Virtualisation & Cloud</div>
+          <div class="skill-line">> Développement Web (PHP / JS)</div>
+        </div>
+      </div>
+
+      <div class="text-side">
+        <h2>À propos de moi</h2>
+        <p>
+          Étudiant passionné par les réseaux et l’administration système, je m’intéresse aussi au développement web et à la cybersécurité.
+          J’aime comprendre comment les systèmes communiquent, se protègent et peuvent être optimisés.
+          Mon objectif est de maîtriser à la fois la gestion des infrastructures et le développement d’outils pratiques pour les administrer.
+        </p>
+        <a href="cv.pdf" class="cv-btn" download>Télécharger mon CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌐 Réseaux -->
+  <section id="reseaux">
+    <h2>Retrouve-moi ici</h2>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/roberto-razakandrandria-2b63a7386/" target="_blank" class="social linkedin">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/nrsRZK" target="_blank" class="social github">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://x.com/tonprofil" target="_blank" class="social twitter">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 📨 Contact -->
+  <section id="contact">
+    <h2>Contactez-moi</h2>
+    <p>Je suis toujours disponible</p>
+    <form action="mailto:roberto.miadantsoa@gmail.com" method="post" enctype="text/plain">
+      <div class="form-group">
+        <input type="text" name="nom" placeholder="Votre nom" required>
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Votre email" required>
+      </div>
+      <div class="form-group">
+        <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
+      </div>
+      <button type="submit" class="btn-send">Envoyer</button>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
