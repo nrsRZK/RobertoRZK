@@ -1,51 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // 🔹 Reveal elements au scroll
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+// --- Menu burger ---
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("nav-links");
 
-  // 🔹 Scroll smooth pour tous les liens internes
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute("href"));
-      if(target){
-        target.scrollIntoView({ behavior: "smooth" });
-      }
+burger.addEventListener("click", () => {
+  burger.classList.toggle("active");
+  navLinks.classList.toggle("show");
+});
 
-      // Ferme le menu burger si ouvert
-      const navLinks = document.getElementById("nav-links");
-      const burger = document.getElementById("burger");
-      if(navLinks.classList.contains("show")){
-        navLinks.classList.remove("show");
-        burger.classList.remove("active");
-      }
-    });
+// Fermer le menu au clic sur un lien
+document.querySelectorAll("#nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    burger.classList.remove("active");
+    navLinks.classList.remove("show");
   });
+});
 
-  // 🔹 Burger menu
-  const burger = document.getElementById("burger");
-  const navLinks = document.getElementById("nav-links");
+// --- Animation de révélation au scroll ---
+const reveals = document.querySelectorAll(".reveal");
+window.addEventListener("scroll", () => {
+  for (let i = 0; i < reveals.length; i++) {
+    const windowHeight = window.innerHeight;
+    const revealTop = reveals[i].getBoundingClientRect().top;
+    const revealPoint = 100;
 
-  burger.addEventListener("click", () => {
-    burger.classList.toggle("active");
-    navLinks.classList.toggle("show");
-  });
-
-  // 🔹 Changement de style navbar au scroll
-  const navbar = document.getElementById("navbar");
-  window.addEventListener("scroll", () => {
-    if(window.scrollY > 50){
-      navbar.style.background = "rgba(13,13,13,0.95)";
+    if (revealTop < windowHeight - revealPoint) {
+      reveals[i].classList.add("visible");
     } else {
-      navbar.style.background = "rgba(13,13,13,0.8)";
+      reveals[i].classList.remove("visible");
     }
-  });
+  }
+});
+// Forcer une première vérification à l'ouverture de la page
+window.addEventListener("load", () => {
+  window.dispatchEvent(new Event("scroll"));
 });
