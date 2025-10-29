@@ -1,36 +1,56 @@
-// --- Menu burger ---
-const burger = document.getElementById("burger");
-const navLinks = document.getElementById("nav-links");
+// 🔹 Menu burger
+const burger = document.querySelector('.burger');
+const navLinks = document.getElementById('nav-links');
 
-burger.addEventListener("click", () => {
-  burger.classList.toggle("active");
-  navLinks.classList.toggle("show");
+burger.addEventListener('click', () => {
+  burger.classList.toggle('active');
+  navLinks.classList.toggle('show');
 });
 
-// Fermer le menu au clic sur un lien
-document.querySelectorAll("#nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    burger.classList.remove("active");
-    navLinks.classList.remove("show");
+// 🔹 Smooth scroll pour tous les liens internes
+document.querySelectorAll('#nav-links a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const target = document.querySelector(this.getAttribute('href'));
+    if (!target) return;
+
+    window.scrollTo({
+      top: target.offsetTop - 70, // Ajuste pour la navbar fixe
+      behavior: 'smooth'
+    });
+
+    // Ferme le menu mobile après clic
+    if (navLinks.classList.contains('show')) {
+      navLinks.classList.remove('show');
+      burger.classList.remove('active');
+    }
   });
 });
 
-// --- Animation de révélation au scroll ---
-const reveals = document.querySelectorAll(".reveal");
-window.addEventListener("scroll", () => {
-  for (let i = 0; i < reveals.length; i++) {
-    const windowHeight = window.innerHeight;
-    const revealTop = reveals[i].getBoundingClientRect().top;
-    const revealPoint = 100;
+// 🔹 Reveal sections animation
+const reveals = document.querySelectorAll('.reveal');
 
-    if (revealTop < windowHeight - revealPoint) {
-      reveals[i].classList.add("visible");
-    } else {
-      reveals[i].classList.remove("visible");
-    }
+const revealObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // une seule fois pour optimisation
+      }
+    });
+  },
+  {
+    threshold: 0.2 // déclenche quand 20% visible
   }
-});
-// Forcer une première vérification à l'ouverture de la page
-window.addEventListener("load", () => {
-  window.dispatchEvent(new Event("scroll"));
+);
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// 🔹 Précharger images pour un rendu plus rapide
+const images = document.querySelectorAll('header, .profile-container img');
+images.forEach(img => {
+  const src = img.tagName === 'IMG' ? img.src : img.style.backgroundImage.slice(5, -2);
+  const preImg = new Image();
+  preImg.src = src;
 });
