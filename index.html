@@ -9,14 +9,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
 
   <!-- 🔹 Chargement JS non bloquant -->
   <script src="script.js" defer></script>
 </head>
 
 <body>
+
+  <!-- START: Preloader -->
+<div id="preloader" aria-hidden="true">
+  <div class="preloader-inner">
+    <svg class="spinner" viewBox="0 0 50 50" aria-hidden="true">
+      <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+    <div class="preloader-text">Chargement…</div>
+  </div>
+</div>
+<!-- END: Preloader -->
+
+  
   <!-- 🔹 NAVBAR -->
-  <header>
+  <header id="hero">
     <section id="navbar">
       <div class="logo">
         <img src="ChatGPT Image 23 sept. 2025, 17_06_41.png" alt="logo" width="50" height="auto">
@@ -24,11 +38,16 @@
       </div>
 
       <nav id="nav-links">
-        <a href="#navbar">Accueil</a>
+        <a href="#hero">Accueil</a>
         <a href="#about">À propos</a>
         <a href="#reseaux">Réseaux</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <!-- 🔹 Bouton thème -->
+      <button id="theme-toggle" aria-label="Basculer thème" title="Basculer thème">
+        🌙
+      </button>
 
       <div class="burger" id="burger">
         <span></span><span></span><span></span>
@@ -88,7 +107,7 @@
   </section>
 
   <!-- 🔹 Contact -->
-  <section id="contact" class="reveal">
+  <!-- <section id="contact" class="reveal">
     <h2>Contactez-moi</h2>
     <p>Je suis toujours disponible pour échanger</p>
     <form action="mailto:roberto.miadantsoa@gmail.com" method="post" enctype="text/plain">
@@ -103,6 +122,34 @@
       </div>
       <button type="submit" class="btn-send">Envoyer</button>
     </form>
-  </section>
+  </section> -->
+
+ <!-- 🔹 Contact -->
+<section id="contact" class="reveal">
+  <h2>Contactez-moi</h2>
+  <p>Je suis toujours disponible pour échanger</p>
+
+  <form id="contact-form" novalidate>
+    <div class="form-group">
+      <input type="text" name="nom" placeholder="Votre nom" required />
+      <span class="error-message"></span>
+    </div>
+    <div class="form-group">
+      <input type="email" name="email" placeholder="Votre email" required />
+      <span class="error-message"></span>
+    </div>
+    <div class="form-group">
+      <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
+      <span class="error-message"></span>
+    </div>
+    <button type="submit" class="btn-send">Envoyer</button>
+
+    <!-- Conteneur pour le message de feedback -->
+    <div id="form-message" class="form-message"></div>
+  </form>
+</section>
+
+
+
 </body>
 </html>

@@ -6,6 +6,77 @@
   --neutral-dark: #1A1A1A;
 }
 
+/* Thème clair */
+:root[data-theme="light"] {
+  --primary-color: #FFFFFF;
+  --secondary-color: #0077CC;
+  --accent-color: #00AA66;
+  --neutral-light: #1A1A1A;
+  --neutral-dark: #E0E0E0;
+}
+
+/* ===== Preloader / Loader ===== */
+#preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(13,13,13,0.95), rgba(0,0,0,0.85));
+  z-index: 9999;
+  transition: opacity 600ms ease, visibility 600ms ease;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--neutral-light);
+  font-family: "Roboto", sans-serif;
+}
+
+.spinner {
+  width: 64px;
+  height: 64px;
+}
+.spinner .path {
+  stroke: var(--secondary-color);
+  stroke-linecap: round;
+  stroke-dasharray: 90;
+  stroke-dashoffset: 60;
+  animation: spin 1.2s linear infinite, dash 1.4s ease-in-out infinite;
+}
+
+.preloader-text {
+  font-size: 0.95rem;
+  color: var(--neutral-light);
+  opacity: 0.9;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+@keyframes dash {
+  0% { stroke-dashoffset: 90; }
+  50% { stroke-dashoffset: 30; }
+  100% { stroke-dashoffset: 90; }
+}
+
+@media (max-width: 480px) {
+  .spinner { width: 48px; height: 48px; }
+  .preloader-text { font-size: 0.9rem; }
+}
+
 /* 🔹 Base */
 * {
   box-sizing: border-box;
@@ -20,7 +91,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 🔹 Navbar */
+/* 🔹 Navbar commun */
 #navbar {
   position: fixed;
   top: 0;
@@ -30,11 +101,13 @@ html {
   justify-content: space-between;
   align-items: center;
   padding: 12px 5%;
-  background: rgba(13,13,13,0.9);
+  background: rgba(13,13,13,0.9); /* sombre par défaut */
   backdrop-filter: blur(10px);
   z-index: 100;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -46,14 +119,14 @@ html {
 }
 .logo h1 {
   font-size: 1.2rem;
-  color: var(--neutral-light);
   font-family: "Montserrat", sans-serif;
+  color: var(--neutral-light); /* sombre par défaut */
 }
 .logo span {
   color: var(--secondary-color);
 }
 
-/* Menu desktop */
+/* Liens de navigation */
 #nav-links {
   display: flex;
   gap: 30px;
@@ -63,26 +136,83 @@ html {
   background: transparent;
 }
 #nav-links a {
-  color: var(--neutral-light);
+  color: var(--neutral-light); /* sombre par défaut */
   text-decoration: none;
   font-size: 1.2rem;
   font-weight: 500;
   transition: color 0.3s;
 }
-#nav-links a::after {
-  content: "";
-  height: 2px;
-  width: 0;
-  background: var(--secondary-color);
-  display: block;
-  transition: width 0.3s;
-}
-#nav-links a:hover::after {
-  width: 100%;
-}
 #nav-links a:hover {
   color: var(--secondary-color);
 }
+
+/* Burger menu */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 18px;
+  cursor: pointer;
+}
+.burger span {
+  display: block;
+  height: 3px;
+  background: var(--secondary-color);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.burger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Bouton thème */
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--neutral-light); /* sombre par défaut */
+  transition: color 0.3s;
+}
+#theme-toggle:hover {
+  color: var(--accent-color);
+}
+
+/* 🔹 Navbar mode clair */
+:root[data-theme="light"] #navbar {
+  background: rgba(153, 150, 150, 0.95); /* un gris clair agréable */
+}
+
+:root[data-theme="light"] .logo h1 {
+  color: #111; /* texte sombre lisible */
+}
+
+:root[data-theme="light"] #nav-links a {
+  color: #111; /* texte sombre lisible */
+}
+
+:root[data-theme="light"] #nav-links a:hover {
+  color: var(--secondary-color);
+}
+
+:root[data-theme="light"] .burger span {
+  background: #111; /* barres burger visibles sur fond clair */
+}
+
+:root[data-theme="light"] #theme-toggle {
+  color: #111; /* bouton thème visible */
+}
+:root[data-theme="light"] #theme-toggle:hover {
+  color: var(--accent-color);
+}
+
 
 /* Burger menu (mobile) */
 .burger {
@@ -110,22 +240,42 @@ html {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* 🔹 Header */
+
+/* 🔹 Header / Hero */
 header {
   position: relative;
   height: 100vh;
   text-align: center;
-  background: linear-gradient(180deg, rgba(13,13,13,0.9), rgba(0,31,31,0.9)), url("jefferson-santos-9SoCnyQmkzI-unsplash.jpg") center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(13,13,13,0.9), rgba(0,31,31,0.9)),
+              url("jefferson-santos-9SoCnyQmkzI-unsplash.jpg") center/cover no-repeat;
+  transition: background 0.3s ease;
 }
 
+/* 🔹 Hero content */
 .hero-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0 10px;
+  transition: color 0.3s ease;
 }
 
+.hero-content h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: var(--neutral-light); /* par défaut sombre */
+  transition: color 0.3s ease;
+}
+
+.hero-content p {
+  font-size: 0.95rem;
+  color: var(--secondary-color);
+  transition: color 0.3s ease;
+}
+
+/* 🔹 Profile picture */
 .profile-container {
   width: 160px;
   margin: 0 auto 15px auto;
@@ -143,15 +293,58 @@ header {
   display: block;
 }
 
-h2 {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.6rem;
-  margin-bottom: 10px;
+/* 🔹 Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.8s, transform 0.6s;
 }
-p {
-  font-size: 0.95rem;
-  color: var(--secondary-color);
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
+
+/* ===== Mode clair ===== */
+:root[data-theme="light"] header {
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(240,240,240,0.85)),
+              url("jefferson-santos-9SoCnyQmkzI-unsplash.jpg") center/cover no-repeat;
+}
+
+:root[data-theme="light"] .hero-content h2 {
+  color: #111; /* texte sombre lisible */
+}
+
+:root[data-theme="light"] .hero-content p {
+  color: var(--secondary-color) /* texte secondaire lisible */
+}
+
+:root[data-theme="light"] .profile-container {
+  box-shadow: 0 0 25px rgba(0, 170, 102, 0.2); /* halo plus subtil pour mode clair */
+}
+
+:root[data-theme="light"] .profile-container:hover {
+  box-shadow: 0 0 40px rgba(0, 170, 102, 0.25);
+}
+
+/* 🔹 Desktop responsive */
+@media (min-width: 721px) {
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero-content h2 {
+    font-size: 2.4rem;
+  }
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+}
+
 
 /* Reveal animation */
 .reveal {
@@ -251,11 +444,13 @@ p {
   color: var(--secondary-color);
 }
 
-/* 🔹 Contact */
+
+/* 🔹 Contact (mode sombre par défaut) */
 #contact {
   background: linear-gradient(180deg, #0D0D0D, #002222);
   text-align: center;
   padding: 60px 5%;
+  color: var(--neutral-light);
 }
 #contact h2 {
   font-size: 1.6rem;
@@ -284,6 +479,10 @@ p {
   color: var(--neutral-light);
   font-size: 0.95rem;
 }
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255,255,255,0.6);
+}
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
@@ -306,94 +505,123 @@ p {
   box-shadow: 0 0 15px rgba(0,255,153,0.3);
 }
 
-/* 🔹 Desktop enhancements */
+
+/* 🔹 Contact (mode clair) */
+:root[data-theme="light"] #contact {
+  background: linear-gradient(180deg, #ffffff, #eeeeee); /* blanc → gris clair */
+  color: var(--neutral-dark);
+}
+
+:root[data-theme="light"] #contact h2 {
+  color: var(--secondary-color);
+}
+
+:root[data-theme="light"] #contact p {
+  color: #333;
+}
+
+:root[data-theme="light"] .form-group input,
+:root[data-theme="light"] .form-group textarea {
+  background: #fff;
+  color: #222;
+  border: 1px solid var(--secondary-color);
+}
+
+:root[data-theme="light"] .form-group input::placeholder,
+:root[data-theme="light"] .form-group textarea::placeholder {
+  color: #666;
+}
+
+:root[data-theme="light"] .form-group input:focus,
+:root[data-theme="light"] .form-group textarea:focus {
+  box-shadow: 0 0 10px rgba(0,170,102,0.3);
+}
+
+:root[data-theme="light"] .btn-send {
+  color: #fff;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+}
+
+/* Messages d'erreur sous les champs */
+.error-message {
+  display: block;
+  font-size: 0.85rem;
+  color: #FF5555;
+  margin-top: 4px;
+  min-height: 18px; /* pour éviter que le layout "saute" */
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.error-message.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Message global formulaire */
+.form-message {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.form-message.success {
+  background: rgba(0,255,153,0.2);
+  color: #008844;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-message.error {
+  background: rgba(255,85,85,0.2);
+  color: #FF2222;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:root[data-theme="light"] .error-message {
+  color: #CC0000;
+}
+
+:root[data-theme="light"] .form-message.success {
+  background: rgba(0,170,102,0.2);
+  color: #007733;
+}
+
+:root[data-theme="light"] .form-message.error {
+  background: rgba(255,0,0,0.2);
+  color: #CC0000;
+}
+
+
+
+/* 🔹 Media queries et responsive */
 @media (min-width: 721px) {
-  #about {
-    padding: 60px 8%;
-  }
-  .about-container {
-    flex-direction: row;
-    gap: 40px;
-  }
-  .skills-side,
-  .text-side {
-    flex: 1;
-  }
-  h2 {
-    font-size: 1.8rem;
-  }
-  .skill-line {
-    font-size: 1.1rem;
-    padding: 12px 16px;
-    margin: 10px 0;
-  }
-  .profile-container {
-    width: 200px;
-  }
+  #about { padding: 60px 8%; }
+  .about-container { flex-direction: row; gap: 40px; }
+  .skills-side, .text-side { flex: 1; }
+  h2 { font-size: 1.8rem; }
+  .skill-line { font-size: 1.1rem; padding: 12px 16px; margin: 10px 0; }
+  .profile-container { width: 200px; }
 }
 @media (min-width: 1000px) {
-  #about {
-    padding: 80px 10%;
-    height: 100vh;
-  }
-  .about-container {
-    gap: 60px;
-    align-items: flex-start;
-  }
-  h2 {
-    font-size: 2rem;
-  }
-  .skill-line {
-    font-size: 1.4rem;
-    padding: 14px 18px;
-    border-left-width: 3px;
-    margin: 10px 0;
-  }
-  .profile-container {
-    width: 220px;
-  }
-  #reseaux h2 {
-    font-size: 1.9rem;
-  }
-  .social {
-    font-size: 2.6rem;
-  }
-  .text-side p {
-    font-size: 1.2rem;
-  }
+  #about { padding: 80px 10%; height: 100vh; }
+  .about-container { gap: 60px; align-items: flex-start; }
+  h2 { font-size: 2rem; }
+  .skill-line { font-size: 1.4rem; padding: 14px 18px; border-left-width: 3px; margin: 10px 0; }
+  .profile-container { width: 220px; }
+  #reseaux h2 { font-size: 1.9rem; }
+  .social { font-size: 2.6rem; }
+  .text-side p { font-size: 1.2rem; }
 }
-
-/* 🔹 Mobile ≤425px */
 @media (max-width: 425px) {
-  /* Affichage burger */
-  .burger {
-    display: flex;
-  }
-
-  /* Menu caché par défaut */
-  #nav-links {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(10,10,10,0.95);
-    gap: 40px;
-    transition: right 0.4s ease;
-  }
-
-  /* Menu visible si burger cliqué */
-  #nav-links.show {
-    right: 0;
-    display: flex;
-  }
-
-  /* Liens en colonne */
-  #nav-links a {
-    font-size: 1.3rem;
-  }
+  .burger { display: flex; }
+  #nav-links { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background: rgba(10,10,10,0.95); gap: 40px; transition: right 0.4s ease; }
+  #nav-links.show { right: 0; display: flex; }
+  #nav-links a { font-size: 1.3rem; }
 }
