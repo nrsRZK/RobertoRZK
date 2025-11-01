@@ -128,7 +128,7 @@
   const PUBLIC_KEY = 'deYgNLIZcGngQuYIG';   // remplace par ta clé publique
 
   // Initialiser EmailJS
-  emailjs.init('deYgNLIZcGngQuYIG');
+  emailjs.init(PUBLIC_KEY);
 
   const showMessage = (msg, type = 'success') => {
     formMessage.textContent = msg;
