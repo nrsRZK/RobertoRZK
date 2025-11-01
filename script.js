@@ -34,28 +34,27 @@
   }
 })();
 
-/* ===== Thème clair/sombre avec mémorisation ===== */
+
+/* ===== Thème clair/sombre avec interrupteur animé ===== */
 (function () {
   const themeToggle = document.getElementById('theme-toggle');
+  const thumbIcon = themeToggle.querySelector('.toggle-thumb i');
   if (!themeToggle) return;
 
   const savedTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
-  themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  thumbIcon.className = savedTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
 
   themeToggle.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
-    if (current === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-      themeToggle.textContent = '☀️';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      themeToggle.textContent = '🌙';
-    }
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    thumbIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
   });
 })();
+
 
 /* ===== Menu burger ===== */
 (function () {

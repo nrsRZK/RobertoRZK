@@ -172,18 +172,76 @@ html {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Bouton thème */
+
+ /* ===== Interrupteur Thème ===== */
 #theme-toggle {
   background: none;
   border: none;
-  font-size: 1.2rem;
   cursor: pointer;
-  color: var(--neutral-light); /* sombre par défaut */
-  transition: color 0.3s;
+  position: relative;
+  width: 60px;
+  height: 32px;
+  padding: 0;
 }
-#theme-toggle:hover {
-  color: var(--accent-color);
+
+.toggle-track {
+  background: var(--toggle-bg, #333);
+  border-radius: 30px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  transition: background 0.3s ease;
 }
+
+.toggle-thumb {
+  background: var(--thumb-bg, #fff);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+  transform: translateX(3px);
+}
+
+.toggle-thumb i {
+  font-size: 14px;
+  color: var(--icon-color, #333);
+  transition: color 0.3s ease;
+}
+
+/* Thème clair -> interrupteur à droite */
+[data-theme="light"] .toggle-track {
+  background: #333;
+}
+
+[data-theme="light"] .toggle-thumb {
+  transform: translateX(30px);
+  background: #fff;
+}
+
+[data-theme="light"] .toggle-thumb i {
+  color: #0077CC;
+}
+
+/* Thème sombre -> interrupteur à gauche */
+[data-theme="dark"] .toggle-track {
+  background: #2c3e50;
+}
+
+[data-theme="dark"] .toggle-thumb {
+  transform: translateX(3px);
+  background: #ecf0f1;
+}
+
+[data-theme="dark"] .toggle-thumb i {
+  color: #2c3e50;
+}
+
 
 /* 🔹 Navbar mode clair */
 :root[data-theme="light"] #navbar {
